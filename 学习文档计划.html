@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文件预览与下载</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+        #viewer {
+            width: 70%;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+            overflow-y: auto;
+            height: 100vh;
+        }
+        #download-section {
+            width: 30%;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 文本内容预览区域 -->
+    <div id="viewer">
+        <h2>文本内容预览</h2>
+        <pre id="textContent">点击按钮加载文本内容...</pre>
+        <button onclick="loadText('公告.txt')">加载 公告</button>
+    </div>
+
+    <!-- 下载按钮区域 -->
+    <div id="download-section">
+        <h2>文件下载</h2>
+        <a href="陈景润初等数论笔记（其一）.docx" download>
+            <button>下载 陈景润初等数论笔记（其一）</button>
+        </a>
+    </div>
+
+    <script>
+        function loadText(fileName) {
+            fetch(fileName)
+                .then(response => {
+                    if (!response.ok) throw new Error('无法加载文件：' + response.statusText);
+                    return response.text();
+                })
+                .then(text => {
+                    document.getElementById('textContent').textContent = text;
+                })
+                .catch(error => {
+                    document.getElementById('textContent').textContent = error.message;
+                });
+        }
+    </script>
+
+</body>
+</html>
